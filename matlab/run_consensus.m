@@ -147,6 +147,16 @@ if LEADER_SYSTEM
     %}
 end
 
+%% MAIN BODY OF CODE
+%{
+     - iterates through for a specified number of steps from t = 0 to t =
+     tFinal
+     - leader function should run first to identify which agent has highest
+     profit
+     - should update all agents after to have velocity vectors pointing TO
+     leader
+%}
+
 for i = 1:NSTEPS-1
     % moved first step loop to main body so that it iterates every time
 

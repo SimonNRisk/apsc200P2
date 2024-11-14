@@ -16,6 +16,18 @@ ydot: n by 2 array holding the leader's output time derivative data.
 y = zeros(NSTEPS, 2);
 ydot = zeros(NSTEPS, 2);
 
+%% TO DO:
+%{ 
+     - change leader function to update every iteration
+     - need more inputs: calculate which agent is the leader (need position
+    matrix to calculate profit, profit matrix to determine which agent has
+    highest profit)
+     - need to update leader through each iteration to change position
+     vector to match correct agent
+     - velocity array should stay at 0 since leader is not moving
+     - 
+%}
+
 y(currentStep, 1) = 
 
 end
