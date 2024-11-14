@@ -126,10 +126,12 @@ t = linspace(0,TFINAL,NSTEPS)';
 tstep = t(2);
 
 save_head = 1;      
+
 if LEADER_SYSTEM
     % ============================================================= WEEK 8
     % A leader's behaviour is not influenced by other agents
     [leadp, leadv] = leader(t);
+    %{
     for i =1:2
         P(:,1,i) = leadp(:,i);
         Pdot(:,1,i) = leadv(:,i);
@@ -142,9 +144,13 @@ if LEADER_SYSTEM
         end
     end
     save_head = 2; % protects against overwriting a leaders dynamics
+    %}
 end
 
-for i = 2:NSTEPS-1
+for i = 1:NSTEPS-1
+    % moved first step loop to main body so that it iterates every time
+
+
     % repackaging for easy use
     p0 = [P(i,:,1)' P(i,:,2)'];
     q0 = [Q(i,:,1)' Q(i,:,2)'];
