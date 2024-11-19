@@ -23,10 +23,10 @@ for agent = 1:NAGENTS
         highestProfit = profitMatrix(agent, 1);
         leader = agent;
     end
-end
+end 
 
 for agent = 1:NAGENTS
-    profitMatrix(agent, 2) = profitMatrix(leader, 1) - profitMatrix(agent, 1);
+    profitMatrix(agent, 2) = profitMatrix(agent, 1) - profitMatrix(leader, 1);
     totalProfitDelta = totalProfitDelta + profitMatrix(agent, 2);
 end
 
