@@ -10,8 +10,8 @@ It is important to note here that this does not allow for recency bias, as the n
 
 ## Technical Description: What each part does
 
-Q:  
-Q dot / velocity vector:  
+Q: Profit  
+Q dot / velocity vector: Profit delta   
 Adjacency matrix:  
 Profit Function:  
 Update Agent  
