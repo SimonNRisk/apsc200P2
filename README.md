@@ -10,9 +10,12 @@ It is important to note here that this does not allow for recency bias, as the n
 
 ## Technical Description: What each part does
 
-Q: Profit  
-Q dot / velocity vector: Profit delta   
-Adjacency matrix:  
+Q: Position of each agent in a matrix (holds x, y of each agent)  
+Adjacency matrix / : n*n matrix, has leader. Anying with leader as row or column has a 1 (excluded Lth row, Lth column), everything else has a zero  
+P: Vector with different profit for every agent (if start with 10, end with 13, P=3)  
+P delta / Profit delta: Vector containing profits relative to leader: P Delta of agent 1 is (profit of agent 1 - profit of leader) (this is an absolute value for some reason)  
+
+Adjacency matrix: Will change depending on leader. Nobody talks to leader, leader talks to everybody. The degree which leader talks to them (Entry L, a1) is always 1 (except itself). It's all zeroes except when Leader is talking to you or if you are talking to Leader and you are Leader.
 Profit Function:  
 Update Agent  
 
