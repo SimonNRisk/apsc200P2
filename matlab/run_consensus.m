@@ -70,16 +70,16 @@ SHOW_CONSENSUS = 1;     % consensus state vs time plot
 SHOW_ENERGY = 1;        % energy vs time plot
 
 % additional global variables?
-CENTROID1X = 
-CENTROID1Y = 
-CENTROID2X = 
-CENTROID2Y = 
-CENTROID3X = 
-CENTROID3Y = 
+CENTROID1X = ;
+CENTROID1Y = ;
+CENTROID2X = ;
+CENTROID2Y = ;
+CENTROID3X = ;
+CENTROID3Y = ;
 
-PROFIT1 = 
-PROFIT2 = 
-PROFIT3 = 
+PROFIT1 = ;
+PROFIT2 = ;
+PROFIT3 = ;
 %% SETUP
 
 % importing initial values -----------------------------------------------

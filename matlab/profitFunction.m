@@ -1,4 +1,4 @@
-function profitMatrix = profitFunction(y)
+function [profitMatrix, leader] = profitFunction(y)
 profitMatrix = zeros(NAGENTS, 3);
 highestProfit = 0;
 leader = 0;
