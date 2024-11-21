@@ -1,4 +1,4 @@
-function [y1, E1, A] = update_agents(y0, ydot, x1, E0, dt, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3)
+function [y1, A] = update_agents(y0, ydot, x1, dt, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3)
 %{
 Let "n" be the number of agents.
 
@@ -32,7 +32,7 @@ nAgents = size(y0, 1);  % Number of agents
 
 % Initialize outputs
 y1 = y0;  % Initialize updated positions to the current positions
-E1 = E0;  % Initialize updated energy levels
+%E1 = E0;  % Initialize updated energy levels
 
 % Step 1: Identify the leader based on the highest profit (profitFunction is assumed to give this)
 profitMatrix = profitFunction(y0, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);  % Assuming profitFunction returns the profit for all agents
@@ -60,10 +60,8 @@ for agent = 1:nAgents
         y1(agent, :) = y0(agent, :) + moveStep * moveDirection / norm(moveDirection);  % Normalize movement direction
     end
 
-    % Step 3: Update energy based on movement
     distanceMoved = norm(moveDirection);  % Calculate the distance moved
-    energyConsumption = 0.05 * distanceMoved;  % Energy consumed based on distance
-    E1(agent) = E0(agent) - energyConsumption;  % Update energy for agent
+
 end
 
 end

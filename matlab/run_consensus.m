@@ -61,13 +61,13 @@ FLOCKING_SYSTEM = 1;
 LEADER_SYSTEM = 1;
 % if 0 = no leader, 1 = leader, not influenced by network
 
-INIT_ENERGY = 100;      % initial "energy" stored in each agent
+%INIT_ENERGY = 100;      % initial "energy" stored in each agent
 
 % plot toggles - set to 0 to suppress plot
 SHOW_ARENA = 1;         % 2D plot showing agent paths
 SHOW_OUTPUT = 1;        % output vs time plot
 SHOW_CONSENSUS = 1;     % consensus state vs time plot
-SHOW_ENERGY = 1;        % energy vs time plot
+SHOW_ENERGY = 0;        % energy vs time plot
 
 % additional global variables?
 CENTROID1X = 2;   % X-coordinate of centroid for Algorithm 1
@@ -120,7 +120,7 @@ end
 Pdot = zeros(NSTEPS, nagents, 2);
 % same structure as P but for time derivative of output
 
-E = INIT_ENERGY * ones(NSTEPS,nagents);     % all energy data
+%E = INIT_ENERGY * ones(NSTEPS,nagents);     % all energy data
 % E(i,j) is agent-j's energy at the i-th timestep
 
 G = nan(nagents, nagents, NSTEPS-1);  % all network data
@@ -167,7 +167,7 @@ for i = 1:NSTEPS-1
     
     % ============================================================= WEEK 11
     % Update output of all agents based on their positions and consensus state
-    [p1, E(i+1,:), G(:,:,i)] = update_agents(p0, pdot, q1, E(i,:), tstep, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);
+    [p1, G(:,:,i)] = update_agents(p0, pdot, q1, tstep, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);
 
     % Save the updated positions and consensus states for plotting
     for k = save_head:nagents
@@ -263,7 +263,7 @@ p2_ = P(:,:,2);
 q1_ = Q(:,:,1);
 q2_ = Q(:,:,2);
 output_table = [array2table(t) array2table(p1_) array2table(p2_) ...
-    array2table(q1_) array2table(q2_) array2table(E)];
+    array2table(q1_) array2table(q2_)];
 writetable(output_table,"consensus_output.csv"); 
 
 %{
