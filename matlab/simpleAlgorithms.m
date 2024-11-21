@@ -21,9 +21,9 @@ Profit rates:
 %}
 
 % Hardcoded centroids for the three algorithms
-centroids = [2, 3;   % Algorithm 1
-             6, 7;   % Algorithm 2
-             10, 2]; % Algorithm 3
+centroids = [0, 0;   % Vertex 1
+             10, 0;  % Vertex 2
+             5, 8.66]; % Vertex 3 (height for equilateral triangle)
 
 % Hardcoded profit rates for each algorithm
 profitRates = [0.05, 0.15, 0.25]; % Low, medium, high profits

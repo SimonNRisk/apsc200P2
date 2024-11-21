@@ -69,15 +69,16 @@ SHOW_OUTPUT = 1;        % output vs time plot
 SHOW_CONSENSUS = 1;     % consensus state vs time plot
 SHOW_ENERGY = 0;        % energy vs time plot
 
+
 % additional global variables?
-CENTROID1X = 2;   % X-coordinate of centroid for Algorithm 1
-CENTROID1Y = 3;   % Y-coordinate of centroid for Algorithm 1
+CENTROID1X = 0;   % X-coordinate of centroid for Algorithm 1
+CENTROID1Y = 0;   % Y-coordinate of centroid for Algorithm 1
 
-CENTROID2X = 6;   % X-coordinate of centroid for Algorithm 2
-CENTROID2Y = 7;   % Y-coordinate of centroid for Algorithm 2
+CENTROID2X = 10;   % X-coordinate of centroid for Algorithm 2
+CENTROID2Y = 0;   % Y-coordinate of centroid for Algorithm 2
 
-CENTROID3X = 10;  % X-coordinate of centroid for Algorithm 3
-CENTROID3Y = 2;   % Y-coordinate of centroid for Algorithm 3
+CENTROID3X = 5;  % X-coordinate of centroid for Algorithm 3
+CENTROID3Y = 8.66;   % Y-coordinate of centroid for Algorithm 3
 
 PROFIT1 = 0.05;   % Profit rate for Algorithm 1
 PROFIT2 = 0.15;   % Profit rate for Algorithm 2
@@ -140,44 +141,26 @@ P(1, :, 2) = initval(:, 2);  % y positions
 %% MAIN BODY OF CODE
 %% SIMULATION
 for i = 1:NSTEPS-1
-    % Ensure we get the positions of all agents at timestep i
-    currentAgentPositions = squeeze(P(i, :, 1:2));  % Get positions at timestep i (x and y)
+    % Current positions of all agents at timestep i
+    currentAgentPositions = squeeze(P(i, :, :));  % Get positions at timestep i (x and y)
 
-    % Call profitFunction to calculate profit for all agents based on current positions and centroids
-    profitMatrix = profitFunction(currentAgentPositions, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);
+    % Step 1: Calculate profits for all agents
+    profitMatrix = profitFunction(currentAgentPositions, ...
+                                   CENTROID1X, CENTROID1Y, ...
+                                   CENTROID2X, CENTROID2Y, ...
+                                   CENTROID3X, CENTROID3Y, ...
+                                   PROFIT1, PROFIT2, PROFIT3);
 
-    % Repackaging for easy use
-    p0 = [P(i,:,1)' P(i,:,2)'];  % Positions of agents (x and y)
-    q0 = [Q(i,:,1)' Q(i,:,2)'];  % Consensus states for agents
-    pdot = [Pdot(i,:,1)' Pdot(i,:,2)'];  % Velocity of agents
-    
-    profits = simpleAlgorithms(p0);  % Calculate profits using simpleAlgorithms.m
-    
-    % ============================================================= WEEK 9
-    % Identifying which agents can communicate with one another
-    G(:,:,i) = consensus_adjacency_matrix(p0, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3, nagents); 
-    
-    % Degree matrix and Laplacian matrix
-    D = diag(sum(G(:,:,i)));        % Degree matrix
-    L = D - G(:,:,i);               % Laplacian matrix
+    % Step 2: Update agent positions and determine the leader dynamically
+    [p1, G(:,:,i), leader] = update_agents(currentAgentPositions, profitMatrix, tstep);
 
-    % ============================================================= WEEK 10
-    % Update consensus state for all agents
-    q1 = consensus_filter(q0, L, t(i), tstep);
-    
-    % ============================================================= WEEK 11
-    % Update output of all agents based on their positions and consensus state
-    [p1, G(:,:,i)] = update_agents(p0, pdot, q1, tstep, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);
+    % Save the updated positions for plotting
+    P(i+1, :, :) = p1;
 
-    % Save the updated positions and consensus states for plotting
-    for k = save_head:nagents
-        for j = 1:2
-            P(i+1,k,j) = p1(k,j)';  % Update positions (x and y)
-            Q(i+1,k,j) = q1(k,j)';  % Update consensus states
-            Pdot(i+1,k,j) = (P(i+1,k,j) - P(i,k,j)) / tstep;  % Update velocities
-        end
-    end
+    % (Optional) Save the leader index for tracking (if needed for analysis/visualization)
+    leaders(i) = leader;
 end
+
 
 %% PLOTTING
 if (SHOW_ARENA)

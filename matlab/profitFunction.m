@@ -28,9 +28,9 @@ for agent = 1:nAgents
     distance3 = ((y(agent, 1)-CENTROID3X)^2 + (y(agent, 2)-CENTROID3Y)^2)^(1/2);
     
     % Compute weighted profit for each agent
-    normD1 = distance1/(distance1+distance2+distance3);
-    normD2 = distance2/(distance1+distance2+distance3);
-    normD3 = distance3/(distance1+distance2+distance3);
+    normD1 = 1-(distance1/(distance1+distance2+distance3));
+    normD2 = 1-(distance2/(distance1+distance2+distance3));
+    normD3 = 1-(distance3/(distance1+distance2+distance3));
     
     % Calculate the weighted sum of the profits based on distance to centroids
     agentProfit = normD1*PROFIT1 + normD2*PROFIT2 + normD3*PROFIT3;

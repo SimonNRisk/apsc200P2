@@ -13,16 +13,20 @@ the Workspace.
 %% PARAMETERS - can change w/o compromising script execution
 MAX_EDGE_WEIGHT = 10;
 UPDATE_LAG = 0.25;       % in seconds
+TIME_LIMIT = 30;         % Maximum time for animation
 
 %% SIMULATION
-n=length(t)-1;
-for i = 2:n 
-    Gt = graph(G(:,:,i),'omitselfloops');
-    wts = MAX_EDGE_WEIGHT * Gt.Edges.Weight/max(Gt.Edges.Weight);
-    p = plot(Gt,'LineWidth',wts);
+% Find the index corresponding to the TIME_LIMIT
+[~, t_end_idx] = min(abs(t - TIME_LIMIT));  % Closest index to TIME_LIMIT
+
+% Adjust the loop to stop at the TIME_LIMIT
+for i = 2:t_end_idx
+    Gt = graph(G(:,:,i), 'omitselfloops');
+    wts = MAX_EDGE_WEIGHT * Gt.Edges.Weight / max(Gt.Edges.Weight);
+    p = plot(Gt, 'LineWidth', wts);
     p.XData = P(i,:,1);
     p.YData = P(i,:,2);
-    title(strcat('t = ',num2str(t(i),2)));
+    title(strcat('t = ', num2str(t(i), 2)));
     xlabel('x');
     ylabel('y');
     drawnow;
