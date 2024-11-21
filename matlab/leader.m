@@ -1,33 +1,42 @@
-function [y, ydot] = leader(t, currentStep)
+function [y, ydot] = leader(t, currentStep, agentPositions, profitMatrix)
 %{
-Let "n" be the length of the time vector
+This function determines the leader's position dynamically based on 
+the current agent profits. The leader is the agent with the highest profit.
 
 --- Inputs ---
-t: vector of length n holding time data
+t: vector of length n holding time data (not used here directly, but 
+   included for consistency with other functions).
+currentStep: the current simulation step, used to update the leader's position.
+agentPositions: n by 2 array holding the x and y positions of all agents at 
+                  the current simulation step.
+profitMatrix: n by 3 array, where the first column contains the absolute profit 
+              of each agent (output from profitFunction.m).
 
 --- Outputs ---
-y: n by 2 array holding the leader's output data. e.g., x(:,1) is all of
-   the output data for the leader's first output. 
+y: NSTEPS by 2 array holding the leader's x and y positions at every timestep.
+   For each step, y(currentStep, :) represents the leader's position.
+ydot: NSTEPS by 2 array holding the leader's velocity. Since the leader is 
+      not moving autonomously, this remains zero.
 
-ydot: n by 2 array holding the leader's output time derivative data. 
-      e.g., if y is postion then, ydot(:,1) is all of the leader's velocity
-      data for the first output
-%}
-y = zeros(NSTEPS, 2);
-ydot = zeros(NSTEPS, 2);
-
-%% TO DO:
-%{ 
-     - change leader function to update every iteration
-     - need more inputs: calculate which agent is the leader (need position
-    matrix to calculate profit, profit matrix to determine which agent has
-    highest profit)
-     - need to update leader through each iteration to change position
-     vector to match correct agent
-     - velocity array should stay at 0 since leader is not moving
-     - 
+Note: NSTEPS is a global parameter indicating the total number of timesteps.
 %}
 
-y(currentStep, 1) = 
+%% Preallocations for leader data
+global NSTEPS
+y = zeros(NSTEPS, 2);    % Leader's position: x and y
+ydot = zeros(NSTEPS, 2); % Leader's velocity: x and y (always zero)
+
+%% Identify the leader
+[~, leaderIndex] = max(profitMatrix(:, 1)); % Get index of highest profit agent
+
+% Retrieve the leader's position based on agentPositions matrix
+% Ensure only the x and y positions are selected, even if agentPositions has more columns.
+leaderPosition = agentPositions(leaderIndex, 1:2); % Extract only the x and y values (1x2 vector)
+
+%% Update the leader's position for the current simulation step
+y(currentStep, :) = leaderPosition;  % Store the leader's position in the y array
+
+%% Ensure velocity remains zero
+ydot(currentStep, :) = [0, 0]; % The leader's velocity is always zero (no movement).
 
 end
