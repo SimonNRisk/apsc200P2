@@ -28,7 +28,7 @@ for agent = 1:nAgents
     if agent ~= leader
         % Calculate movement direction towards the leader
         moveDirection = leaderPosition - y0(agent, :);  % Vector pointing to leader
-        moveStep = 0.2 * (dt);  % Adjust this to control speed
+        moveStep = 1 * (dt);  % Adjust this to control speed
         y1(agent, :) = y0(agent, :) + moveStep * (moveDirection / norm(moveDirection));  % Normalize movement
     end
 end

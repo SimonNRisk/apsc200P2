@@ -10,14 +10,7 @@ agentPositions: n x 2 array of agent positions (x, y), hardcoded for simplicity.
 profits: n x 1 array of computed profits for each agent.
 
 --- Hardcoded Values ---
-Centroids for the algorithms:
-    Algorithm 1: (2, 3) - Low profit return
-    Algorithm 2: (6, 7) - Medium profit return
-    Algorithm 3: (10, 2) - High profit return
-Profit rates:
-    Algorithm 1: 0.05
-    Algorithm 2: 0.15
-    Algorithm 3: 0.25
+
 %}
 
 % Hardcoded centroids for the three algorithms

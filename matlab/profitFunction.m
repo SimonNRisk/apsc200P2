@@ -17,8 +17,8 @@ leader: the index of the agent with the highest profit
 nAgents = size(y, 1);  % Get the number of agents from the size of y
 
 profitMatrix = zeros(nAgents, 3);
-highestProfit = 0; %tracks max profit in system
-leader = 0; %holds index of agent with highest profit
+highestProfit = -100000000; %so we always better than highest profit
+leader = 1; %holds index of agent with highest profit
 totalProfitDelta = 0; %sum of relative profits for normalization
 
 for agent = 1:nAgents
