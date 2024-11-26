@@ -1,3 +1,4 @@
+
 function [y1, A, leader] = update_agents(y0, profitMatrix, dt)
 %{
 Inputs:

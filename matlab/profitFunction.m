@@ -1,3 +1,4 @@
+
 function [profitMatrix, leader] = profitFunction(y, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3)
 %{
 Let "n" be the number of agents.

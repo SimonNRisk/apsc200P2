@@ -1,3 +1,4 @@
+
 %% HEADER 
 %{
 APSC 200 MODULE P2 - MTHE - CONSENSUS ALGORITHM TEMPLATE
@@ -47,7 +48,7 @@ instructor/TAs to help with large structual modifications to this script.)
 
 % simulation parameters
 TFINAL = 50;
-NSTEPS = 200;
+NSTEPS = 50;
 
 % agent parameters
 K = 4;
@@ -80,9 +81,9 @@ CENTROID2Y = 0;   % Y-coordinate of centroid for Algorithm 2
 CENTROID3X = 5;  % X-coordinate of centroid for Algorithm 3
 CENTROID3Y = 8.66;   % Y-coordinate of centroid for Algorithm 3
 
-PROFIT1 = 0.05;   % Profit rate for Algorithm 1
-PROFIT2 = 0.15;   % Profit rate for Algorithm 2
-PROFIT3 = 0.25;   % Profit rate for Algorithm 3
+PROFIT1 = 0;   % Profit rate for Algorithm 1
+PROFIT2 = 0;   % Profit rate for Algorithm 2
+PROFIT3 = 0;   % Profit rate for Algorithm 3
 %% REMEMBER: IVE JUST MADE THESE UP
 
 %profitMatrix = profitFunction(currentAgentPositions, CENTROID1X, CENTROID1Y, CENTROID2X, CENTROID2Y, CENTROID3X, CENTROID3Y, PROFIT1, PROFIT2, PROFIT3);
@@ -104,6 +105,9 @@ else
     initval(:,3) = initval(:,1);
     initval(:,4) = initval(:,2);
 end
+
+%read .csv of profit values calculated from algorithms
+algoProfit = readmatrix('test_profit_input.csv');
 
 % pre-allocation & initialization -----------------------------------------
 P = nan(NSTEPS, nagents, 2);        % all output data 
@@ -143,6 +147,11 @@ P(1, :, 2) = initval(:, 2);  % y positions
 for i = 1:NSTEPS-1
     % Current positions of all agents at timestep i
     currentAgentPositions = squeeze(P(i, :, :));  % Get positions at timestep i (x and y)
+
+    %update profit from each algorithm for time step
+    PROFIT1 = algoProfit(i,1);
+    PROFIT2 = algoProfit(i,2);
+    PROFIT3 = algoProfit(i,3);
 
     % Step 1: Calculate profits for all agents
     profitMatrix = profitFunction(currentAgentPositions, ...

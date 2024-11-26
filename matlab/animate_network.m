@@ -1,3 +1,4 @@
+
 %% animate_network.m
 %{
 The purpose of this script is to allow the user to visualize how the

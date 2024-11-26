@@ -1,3 +1,4 @@
+
 function profits = simpleAlgorithms(agentPositions)
 %{
 Computes the profit for each agent based on their proximity to the centroids
