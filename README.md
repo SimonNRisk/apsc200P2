@@ -8,7 +8,14 @@ This stuff is pretty dense so this is a paragraph that attempts to describe the 
 
 profit is read from a .csv file and updates with time!
 
-## Getting Started
+## Testing
+The testing folder contains Python code that runs three different algorithms on real stock data. These algorithms are:
+1) Buy and Hold: Buys the stock and see how much it grows over the year
+2) Mean reversion: Buys the stock if the previous day's return is negative and sells otherwise
+3) Momentum: Buys the stock if the previous day's return is positive and sells otherwise
+
+These three algorithms are run on VOO, Vanguard's index fund. Their relative profits are reported in "algos_relative_profit.csv", in decimal form (0.10 = 10%). This csv should replace the input csv of the matlab code when testing. Data.py displays data of the chosen stock, which acts to make the analysis process more comprehensive, but does not play a role in directly running the code.
+
 
 ### Dependencies
 
