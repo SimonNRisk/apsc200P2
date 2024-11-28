@@ -24,30 +24,51 @@ def mean_reversion(prices, i):
 
 def momentum(prices, i):
     """Momentum: buys if the previous day's return is positive, sells otherwise."""
-    if i > 0:
-        if i > 1:
-            prev_return = ((prices.iloc[i - 1] - prices.iloc[i - 2]) / prices.iloc[i - 2]).item()
-        else:
-            prev_return = 0
-        return prev_return if prev_return > 0 else 0
+    if i > 1:
+        # Ensure prev_return is a scalar by explicitly calculating it
+        prev_return = (prices.iloc[i - 1] - prices.iloc[i - 2]) / prices.iloc[i - 2]
+        
+        # Only take today's return if prev_return is positive
+        if prev_return > 0:
+            return (prices.iloc[i] - prices.iloc[i - 1]) / prices.iloc[i - 1]
     return 0
 
 # Download stock data
 ticker = "VOO"
+
+print(f"Downloading data for {ticker} from {start_date} to {end_date}...")
+data = yf.download(ticker, start=start_date, end=end_date, interval="1d")
+# Download stock data
+print(f"Downloading data for {ticker} from {start_date} to {end_date}...")
+data = yf.download(ticker, start=start_date, end=end_date, interval="1d")
+# Download stock data
 print(f"Downloading data for {ticker} from {start_date} to {end_date}...")
 data = yf.download(ticker, start=start_date, end=end_date, interval="1d")
 
-# Explicitly extract 'Close' prices for the specific ticker
+# Check if the data is empty
+if data.empty:
+    raise ValueError("No data was downloaded. Check the ticker symbol or date range.")
+
+# Flatten the DataFrame if it has multi-index columns
+if isinstance(data.columns, pd.MultiIndex):
+    data.columns = ['_'.join(col).strip() for col in data.columns.values]
+
+# Check the structure of the flattened data
+print(data.head())
+
+# Extract the 'Close' prices explicitly
 try:
-    prices = data["Close"]
+    prices = data["Close"] if "Close" in data else data[f"Close_{ticker}"]
+    prices = prices.dropna()  # Remove NaN values
 except KeyError:
-    raise ValueError("Unable to extract 'Close' prices for the ticker. Ensure the dataset format is correct.")
+    raise ValueError("Unable to extract 'Close' prices. Check if the ticker or data format is correct.")
 
-# Validate the prices series
-prices = prices.dropna()
+# Validate the extracted prices
+if prices.empty or not isinstance(prices, pd.Series):
+    raise ValueError("Prices should be a non-empty Pandas Series. Check your data extraction.")
 
-if prices.empty:
-    raise ValueError("No valid 'Close' prices available in the downloaded data.")
+# Display the extracted prices (optional)
+print(prices.head())
 
 # Initialize lists to store daily profits for each algorithm
 buy_and_hold_profits = [0]
@@ -73,7 +94,7 @@ for col in ["buy_and_hold", "mean_reversion", "momentum"]:
     results[col] = results[col].fillna(0)  # Replace NaN with 0 (optional)
 
 # Save the results to a CSV file
-output_file = "new_data_algos_relative_profit.csv"
+output_file = "VOO_relative_profit.csv"
 results.to_csv(output_file, index=False, float_format="%.6f")  # Save with controlled decimal precision
 print(f"Results saved to {output_file}")
 

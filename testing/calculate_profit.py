@@ -3,13 +3,13 @@ import pandas as pd
 # Define total initial investment and allocation percentages
 total_investment = 1000
 allocation_percentages = {
-    "buy_and_hold": 10.8780228 / 100,
-    "mean_reversion": 9.569747332 / 100,
-    "momentum": 79.55222986 / 100
+    "buy_and_hold": 0.5995,
+    "mean_reversion": 0.2069,
+    "momentum": 0.1936
 }
 
 # Load the CSV file with daily returns
-input_file = "new_data_algos_relative_profit.csv"  # Replace with your file name
+input_file = "VOO_relative_profit.csv"  # Replace with your file name
 data = pd.read_csv(input_file)
 
 # Initialize a dictionary to store the final value for each algorithm
