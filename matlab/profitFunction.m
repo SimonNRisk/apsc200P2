@@ -27,11 +27,17 @@ for agent = 1:nAgents
     distance1 = ((y(agent, 1)-CENTROID1X)^2 + (y(agent, 2)-CENTROID1Y)^2)^(1/2);
     distance2 = ((y(agent, 1)-CENTROID2X)^2 + (y(agent, 2)-CENTROID2Y)^2)^(1/2);
     distance3 = ((y(agent, 1)-CENTROID3X)^2 + (y(agent, 2)-CENTROID3Y)^2)^(1/2);
+
+    %inverse distances
+    iD1 = 1/distance1;
+    iD2 = 1/distance2;
+    iD3 = 1/distance3;
+    totalID = iD1+iD2+iD3;
     
     % Compute weighted profit for each agent
-    normD1 = 1-(distance1/(distance1+distance2+distance3));
-    normD2 = 1-(distance2/(distance1+distance2+distance3));
-    normD3 = 1-(distance3/(distance1+distance2+distance3));
+    normD1 = (iD1/totalID);
+    normD2 = (iD2/totalID);
+    normD3 = (iD3/totalID);
     
     % Calculate the weighted sum of the profits based on distance to centroids
     agentProfit = normD1*PROFIT1 + normD2*PROFIT2 + normD3*PROFIT3;
