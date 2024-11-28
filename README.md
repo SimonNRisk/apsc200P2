@@ -16,7 +16,16 @@ The testing folder contains Python code that runs three different algorithms on 
 
 These three algorithms are run on VOO, Vanguard's index fund. Their relative profits are reported in "algos_relative_profit.csv", in decimal form (0.10 = 10%). This csv should replace the input csv of the matlab code when testing. Data.py displays data of the chosen stock, which acts to make the analysis process more comprehensive, but does not play a role in directly running the code.
 
+## Results
+We applied the determined optimal trading stratedgy onto unseen 2024 data (up until the first of November). Here are the results:
+Applied on 2024 data:
+Final Investment Results:
+buy_and_hold: $108.78
+mean_reversion: $57.48
+momentum: $1632.04
 
+Total Final Value: $1798.29
+Total Profit: $798.29
 ### Dependencies
 
 not sure if there are any but there will be for once we test on real data
